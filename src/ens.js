@@ -41,16 +41,16 @@ function getLabelhash(label) {
 
 const contracts = {
   1: {
-    registry: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
+    registry: '0x1e7426a2b72B768bBBC5B2686280aB51196592FB'
   },
   3: {
-    registry: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
+    registry: '0x1e7426a2b72B768bBBC5B2686280aB51196592FB'
   },
   4: {
-    registry: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
+    registry: '0x1e7426a2b72B768bBBC5B2686280aB51196592FB'
   },
   5: {
-    registry: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
+    registry: '0x1e7426a2b72B768bBBC5B2686280aB51196592FB'
   }
 }
 
