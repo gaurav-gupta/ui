@@ -368,7 +368,7 @@ export default class Registrar {
     return permanentRegistrarController.maxCommitmentAge()
   }
 
-  async makeCommitment(name, owner, secret = '') {
+  async makeCommitment(name, owner, duration, secret = '') {
     const permanentRegistrarControllerWithoutSigner =
       this.permanentRegistrarController
     const signer = await getSigner()
@@ -377,37 +377,38 @@ export default class Registrar {
     const account = await getAccount()
     const resolverAddr = await this.getAddress('resolver.eth')
     if (parseInt(resolverAddr, 16) === 0) {
-      return permanentRegistrarController.makeCommitment(name, owner, secret)
+      return permanentRegistrarController.makeCommitment(name, owner, duration, secret, "0x0000000000000000000000000000000000000000", [], false, 0, 0)
     } else {
-      return permanentRegistrarController.makeCommitmentWithConfig(
+      return permanentRegistrarController.makeCommitment(
         name,
         owner,
+		duration,
         secret,
         resolverAddr,
-        account
+        [], false, 0, 0
       )
     }
   }
 
-  async checkCommitment(label, secret = '') {
+  async checkCommitment(label, duration, secret = '') {
     const permanentRegistrarControllerWithoutSigner =
       this.permanentRegistrarController
     const signer = await getSigner()
     const permanentRegistrarController =
       permanentRegistrarControllerWithoutSigner.connect(signer)
     const account = await getAccount()
-    const commitment = await this.makeCommitment(label, account, secret)
+    const commitment = await this.makeCommitment(label, account, duration, secret)
     return await permanentRegistrarController.commitments(commitment)
   }
 
-  async commit(label, secret = '') {
+  async commit(label, duration, secret = '') {
     const permanentRegistrarControllerWithoutSigner =
       this.permanentRegistrarController
     const signer = await getSigner()
     const permanentRegistrarController =
       permanentRegistrarControllerWithoutSigner.connect(signer)
     const account = await getAccount()
-    const commitment = await this.makeCommitment(label, account, secret)
+    const commitment = await this.makeCommitment(label, account, duration, secret )
 
     return permanentRegistrarController.commit(commitment)
   }
@@ -429,6 +430,7 @@ export default class Registrar {
           account,
           duration,
           secret,
+		  "0x0000000000000000000000000000000000000000", [], false, 0, 0,
           { value: priceWithBuffer }
         )
       })
@@ -438,27 +440,34 @@ export default class Registrar {
         account,
         duration,
         secret,
+		"0x0000000000000000000000000000000000000000", [], false, 0, 0,
         { value: priceWithBuffer, gasLimit }
       )
     } else {
       const gasLimit = await this.estimateGasLimit(() => {
-        return permanentRegistrarController.estimateGas.registerWithConfig(
+        return permanentRegistrarController.estimateGas.register(
           label,
           account,
           duration,
           secret,
           resolverAddr,
-          account,
+          [],
+		  false,
+		  0,
+		  0,
           { value: priceWithBuffer }
         )
       })
 
-      return permanentRegistrarController.registerWithConfig(
+      return permanentRegistrarController.register(
         label,
         account,
         duration,
         secret,
-        resolverAddr,
+        [],
+		false,
+		0,
+		0,
         account,
         { value: priceWithBuffer, gasLimit }
       )
