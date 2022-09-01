@@ -464,11 +464,11 @@ export default class Registrar {
         account,
         duration,
         secret,
+		resolverAddr,
         [],
 		false,
 		0,
 		0,
-        account,
         { value: priceWithBuffer, gasLimit }
       )
     }
