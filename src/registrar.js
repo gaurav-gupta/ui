@@ -379,13 +379,20 @@ export default class Registrar {
     if (parseInt(resolverAddr, 16) === 0) {
       return permanentRegistrarController.makeCommitment(name, owner, duration, secret, "0x0000000000000000000000000000000000000000", [], false, 0, 0)
     } else {
+		
+	  const resolver = getResolverContract({ address: resolverAddr, provider });
+	  
+	  
+	  const name = label + '.eth';
+	  const node=namehash(name);
+		
       return permanentRegistrarController.makeCommitment(
         name,
         owner,
 		duration,
         secret,
         resolverAddr,
-        [], false, 0, 0
+        [resolver.interface.encodeFunctionData('setAddr(bytes32,address)', [node,account,]),], false, 0, 0
       )
     }
   }
@@ -460,7 +467,7 @@ export default class Registrar {
           secret,
           resolverAddr,
           [resolver.interface.encodeFunctionData('setAddr(bytes32,address)', [node,account,]),],
-		  true,
+		  false,
 		  0,
 		  0,
           { value: priceWithBuffer }
@@ -474,7 +481,7 @@ export default class Registrar {
         secret,
 		resolverAddr,
         [resolver.interface.encodeFunctionData('setAddr(bytes32,address)', [node,account,]),],
-		true,
+		false,
 		0,
 		0,
         { value: priceWithBuffer, gasLimit }
