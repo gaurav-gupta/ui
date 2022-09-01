@@ -322,10 +322,10 @@ export default class Registrar {
 
   async getRentPriceAndPremium(name, duration, block="latest") {
     const permanentRegistrarController = this.permanentRegistrarController
-    let price = await permanentRegistrarController.rentPrice(name, duration, {blockTag:block} )
+    let price1 = await permanentRegistrarController.rentPrice(name, duration, {blockTag:block} )
     //let premium = await permanentRegistrarController.rentPrice(name, 0, {blockTag:block} )
     return {
-      price[0], price[1]
+      price:price1[0], premium:price1[1]
     }
   }
 
