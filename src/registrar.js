@@ -444,6 +444,14 @@ export default class Registrar {
         { value: priceWithBuffer, gasLimit }
       )
     } else {
+		
+		
+	  const resolver = getResolverContract({ address: resolverAddr, provider });
+	  
+	  
+	  const name = label + '.eth';
+	  const node=namehash(name);
+	  
       const gasLimit = await this.estimateGasLimit(() => {
         return permanentRegistrarController.estimateGas.register(
           label,
@@ -451,8 +459,8 @@ export default class Registrar {
           duration,
           secret,
           resolverAddr,
-          [],
-		  false,
+          [resolver.interface.encodeFunctionData('setAddr(bytes32,address)', [node,account,]),],
+		  true,
 		  0,
 		  0,
           { value: priceWithBuffer }
@@ -465,8 +473,8 @@ export default class Registrar {
         duration,
         secret,
 		resolverAddr,
-        [],
-		false,
+        [resolver.interface.encodeFunctionData('setAddr(bytes32,address)', [node,account,]),],
+		true,
 		0,
 		0,
         { value: priceWithBuffer, gasLimit }
