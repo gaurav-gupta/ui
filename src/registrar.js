@@ -110,7 +110,9 @@ export default class Registrar {
     const provider = await getProvider()
     const hash = namehash(name)
     const resolverAddr = await this.ENS.resolver(hash)
+	console.log("....................." + hash + "------------" + resolverAddr);
     const Resolver = getResolverContract({ address: resolverAddr, provider })
+	console.log(Resolver);
     return Resolver['addr(bytes32)'](hash)
   }
 
@@ -380,7 +382,7 @@ export default class Registrar {
 	console.log(">>>>>>>>>>>>>>>"+resolverAddr);
 	
     if (parseInt(resolverAddr, 16) === 0) {
-      return permanentRegistrarController.makeCommitment(name, owner, duration, secret, 0x0000000000000000000000000000000000000000, [], false, 0, 0)
+      return permanentRegistrarController.makeCommitment(name, owner, duration, secret, "0x0000000000000000000000000000000000000000", [], false, 0, 0)
     } else {
 				
       return permanentRegistrarController.makeCommitment(
@@ -437,7 +439,7 @@ export default class Registrar {
           account,
           duration,
           secret,
-		  0x0000000000000000000000000000000000000000, [], false, 0, 0,
+		  "0x0000000000000000000000000000000000000000", [], false, 0, 0,
           { value: priceWithBuffer }
         )
       })
@@ -447,7 +449,7 @@ export default class Registrar {
         account,
         duration,
         secret,
-		0x0000000000000000000000000000000000000000, [], false, 0, 0,
+		"0x0000000000000000000000000000000000000000", [], false, 0, 0,
         { value: priceWithBuffer, gasLimit }
       )
     } else {
