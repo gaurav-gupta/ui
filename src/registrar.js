@@ -110,9 +110,7 @@ export default class Registrar {
     const provider = await getProvider()
     const hash = namehash(name)
     const resolverAddr = await this.ENS.resolver(hash)
-	console.log("....................." + hash + "------------" + resolverAddr);
     const Resolver = getResolverContract({ address: resolverAddr, provider })
-	console.log(Resolver);
     return Resolver['addr(bytes32)'](hash)
   }
 
@@ -379,8 +377,6 @@ export default class Registrar {
     const account = await getAccount()
     const resolverAddr = await this.getAddress('resolver.eth')
 	
-	console.log(">>>>>>>>>>>>>>>"+resolverAddr);
-	
     if (parseInt(resolverAddr, 16) === 0) {
       return permanentRegistrarController.makeCommitment(name, owner, duration, secret, "0x0000000000000000000000000000000000000000", [], false, 0, 0)
     } else {
@@ -430,8 +426,7 @@ export default class Registrar {
     const priceWithBuffer = getBufferedPrice(price)
     const resolverAddr = await this.getAddress('resolver.eth')
 	
-	console.log(">>>>>>>>>>>>>>>HI______"+resolverAddr);
-	
+		
     if (parseInt(resolverAddr, 16) === 0) {
       const gasLimit = await this.estimateGasLimit(() => {
         return permanentRegistrarController.estimateGas.register(
@@ -486,9 +481,6 @@ export default class Registrar {
   }
 
   async estimateGasLimit(cb) {
-	console.log("<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>");
-	console.log(cb);
-	console.log(await cb());
     let gas = 0
     try {
       gas = (await cb()).toNumber()
@@ -504,7 +496,7 @@ export default class Registrar {
     if (gas > 0) {
       return gas + transferGasCost
     } else {
-      return gas
+      return transferGasCost
     }
   }
 
