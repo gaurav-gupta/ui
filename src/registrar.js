@@ -480,7 +480,7 @@ export default class Registrar {
   async estimateGasLimit(cb) {
 	console.log("<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>");
 	console.log(cb);
-	cosole.log(await cb());
+	console.log(await cb());
     let gas = 0
     try {
       gas = (await cb()).toNumber()
