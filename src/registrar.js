@@ -376,8 +376,11 @@ export default class Registrar {
       permanentRegistrarControllerWithoutSigner.connect(signer)
     const account = await getAccount()
     const resolverAddr = await this.getAddress('resolver.eth')
+	
+	console.log(">>>>>>>>>>>>>>>"+resolverAddr);
+	
     if (parseInt(resolverAddr, 16) === 0) {
-      return permanentRegistrarController.makeCommitment(name, owner, duration, secret, "0x0000000000000000000000000000000000000000", [], false, 0, 0)
+      return permanentRegistrarController.makeCommitment(name, owner, duration, secret, 0x0000000000000000000000000000000000000000, [], false, 0, 0)
     } else {
 				
       return permanentRegistrarController.makeCommitment(
@@ -424,6 +427,9 @@ export default class Registrar {
     const price = await this.getRentPrice(label, duration)
     const priceWithBuffer = getBufferedPrice(price)
     const resolverAddr = await this.getAddress('resolver.eth')
+	
+	console.log(">>>>>>>>>>>>>>>HI______"+resolverAddr);
+	
     if (parseInt(resolverAddr, 16) === 0) {
       const gasLimit = await this.estimateGasLimit(() => {
         return permanentRegistrarController.estimateGas.register(
@@ -431,7 +437,7 @@ export default class Registrar {
           account,
           duration,
           secret,
-		  "0x0000000000000000000000000000000000000000", [], false, 0, 0,
+		  0x0000000000000000000000000000000000000000, [], false, 0, 0,
           { value: priceWithBuffer }
         )
       })
@@ -441,7 +447,7 @@ export default class Registrar {
         account,
         duration,
         secret,
-		"0x0000000000000000000000000000000000000000", [], false, 0, 0,
+		0x0000000000000000000000000000000000000000, [], false, 0, 0,
         { value: priceWithBuffer, gasLimit }
       )
     } else {
