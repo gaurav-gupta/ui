@@ -368,7 +368,7 @@ export default class Registrar {
     return permanentRegistrarController.maxCommitmentAge()
   }
 
-  async makeCommitment(name, owner, duration, secret = '') {
+  async makeCommitment(label, owner, duration, secret = '') {
     const permanentRegistrarControllerWithoutSigner =
       this.permanentRegistrarController
     const signer = await getSigner()
@@ -378,7 +378,7 @@ export default class Registrar {
     const resolverAddr = await this.getAddress('resolver.eth')
 	
     if (parseInt(resolverAddr, 16) === 0) {
-      return permanentRegistrarController.makeCommitment(name, owner, duration, secret, "0x0000000000000000000000000000000000000000", [], false, 0, 0)
+      return permanentRegistrarController.makeCommitment(label, owner, duration, secret, "0x0000000000000000000000000000000000000000", [], false, 0, 0)
     } else {
 		
 	 const provider = await getProvider();
@@ -389,7 +389,7 @@ export default class Registrar {
       const node=namehash(name);
 				
       return permanentRegistrarController.makeCommitment(
-        name,
+        label,
         owner,
 		duration,
         secret,
