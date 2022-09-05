@@ -380,6 +380,8 @@ export default class Registrar {
     if (parseInt(resolverAddr, 16) === 0) {
       return permanentRegistrarController.makeCommitment(name, owner, duration, secret, "0x0000000000000000000000000000000000000000", [], false, 0, 0)
     } else {
+		
+	 const provider = await getProvider();
       const resolver = getResolverContract({ address: resolverAddr, provider });
       
       
@@ -453,6 +455,7 @@ export default class Registrar {
         { value: priceWithBuffer, gasLimit }
       )
     } else {
+		 const provider = await getProvider();
 		
       const resolver = getResolverContract({ address: resolverAddr, provider });
             
