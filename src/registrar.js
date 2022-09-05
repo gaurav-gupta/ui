@@ -378,7 +378,7 @@ export default class Registrar {
     const resolverAddr = await this.getAddress('resolver.eth')
 	
     if (parseInt(resolverAddr, 16) === 0) {
-      return permanentRegistrarController.makeCommitment(label, owner, duration, secret, "0x0000000000000000000000000000000000000000", [], false, 0, 0)
+      return permanentRegistrarController.makeCommitment(label, owner, duration, secret, "0x0000000000000000000000000000000000000000", [], true, 0, 0)
     } else {
 		
 	 const provider = await getProvider();
@@ -394,7 +394,7 @@ export default class Registrar {
 		duration,
         secret,
         resolverAddr,
-        [resolver.interface.encodeFunctionData('setAddr(bytes32,address)', [node,account,]),], false, 0, 0
+        [resolver.interface.encodeFunctionData('setAddr(bytes32,address)', [node,account,]),], true, 0, 0
       )
     }
   }
@@ -441,7 +441,7 @@ export default class Registrar {
           account,
           duration,
           secret,
-		  "0x0000000000000000000000000000000000000000", [], false, 0, 0,
+		  "0x0000000000000000000000000000000000000000", [], true, 0, 0,
           { value: priceWithBuffer }
         )
       })
@@ -451,7 +451,7 @@ export default class Registrar {
         account,
         duration,
         secret,
-		"0x0000000000000000000000000000000000000000", [], false, 0, 0,
+		"0x0000000000000000000000000000000000000000", [], true, 0, 0,
         { value: priceWithBuffer, gasLimit }
       )
     } else {
@@ -470,7 +470,7 @@ export default class Registrar {
           secret,
           resolverAddr,
           [resolver.interface.encodeFunctionData('setAddr(bytes32,address)', [node,account,]),],
-		  false,
+		  true,
 		  0,
 		  0,
           { value: priceWithBuffer }
@@ -484,7 +484,7 @@ export default class Registrar {
         secret,
 		resolverAddr,
         [resolver.interface.encodeFunctionData('setAddr(bytes32,address)', [node,account,]),],
-		false,
+		true,
 		0,
 		0,
         { value: priceWithBuffer, gasLimit }
